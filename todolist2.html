@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-size: 20px;
+            font-family: calibri;
+            box-sizing: border-box;
+            margin: 0;
+        }
+        body{background-color: rgb(240, 240, 240);
+        text-align: center;}
+        .warning{
+            background-color: rgb(255, 223, 227);
+            color: brown;
+            padding: 10px 20px;
+            width: 200px;
+            border-radius: 10px;
+            border: 1px solid brown;
+            position: fixed;
+            left: 50%;
+            bottom: 10%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        .w2{
+            background-color: rgb(215, 255, 215);
+            border: 1px solid green;
+            color: green;
+            bottom: 20%;
+        }
+        h1{
+            font-size: 30px;
+            text-align: center;
+            font-weight: 100;
+            background-color: royalblue;
+            color: white;
+            padding: 10px;
+        }
+        .container{
+            margin: auto;
+        }
+        #form{
+            width: max-content;
+            margin: 20px auto;
+        }
+        .input{
+            width: 60vw;
+
+            border-radius: 50px 0% 0% 50px;
+            border: 1px solid royalblue;
+            background: transparent;
+            float: left;
+            padding: 10px 20px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .addbtn,.clearbtn{
+            border-radius: 0% 50px 50px 0%;
+            border: 1px solid royalblue;
+            margin-left: -1px;
+            padding: 10px 20px;
+            outline: none;
+            color: royalblue;
+            transition: 0.3s;
+            background-color: transparent;
+        }
+        .clearbtn{
+            border-radius: 50px;
+            display: block;
+            margin: 40px auto;
+            
+        }
+        button:hover{
+            background-color: royalblue;
+            color: white;
+        }
+        .input:focus,button:focus{
+            box-shadow: 0px 0px 0px 3px powderblue;
+        }
+        .itemlist{
+            color: black;
+            width: 80%;
+            margin: auto;
+            text-align: left;
+            /* background-color: gray; */
+        }
+        .item{
+            display: block;
+            margin-left: -38px;
+            list-style:none;
+            margin-top: 20px;
+            transition: 0.1s;
+            position: relative;
+        }
+        .item:hover{
+            background-color: rgb(225, 225, 225);
+            box-shadow: 0px 0px 0px 5px rgb(225, 225, 225);
+        }
+        .itemlist span{
+            /* float: right; */
+            position: absolute;
+            font-weight: 900;
+            line-height: 25px;
+            margin: 0px 2px;
+            padding: 0px 3px;
+            cursor: pointer;
+            border-radius: 50px;
+        }
+        .itemlist span:hover{
+            border-bottom: 1px solid black;
+        }
+        .check{
+            color: limegreen;
+            right: 50px;
+        }
+        .checked{
+            color: gray;
+            text-decoration: line-through;
+        }
+        .cross{
+            right: 0;
+            color: red;
+        }
+        .edit{
+            right: 25px;
+            color: royalblue;
+        }
+
+        .share{
+            padding: 15px;
+            font-weight: 900;
+            position: fixed;
+            bottom: 5%;
+            right: 5%;
+            background-color: transparent;
+            outline: none;
+            border: 1px solid royalblue;
+            /* padding:  0px; */
+            color: rgb(0, 64, 255);
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        .copylist{
+            position: fixed;
+            opacity: 0;
+        }
+        @media (max-width:350px) {
+            .input{
+                width: 45vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="warning w1">Empty Input Field</div>
+    <div class="warning w2">All Item Cleared</div>
+    <h1>To Do List</h1>
+   <div class="container">
+    <form action="javascript:void(0)"  id="form">
+        <input type="text" class="input" placeholder="type here...">
+        <button class="addbtn" type="button">Add Items</button>
+    </form>
+   </div>
+
+    <ol class="itemlist">
+
+        <li class="item">
+            <i class="val" style='font-style: normal;'>Grocery Shopping</i>
+            <span onclick="cross(this)" class="cross">&Cross;</span>
+            <span onclick="edit(this)" class="edit">&larrhk;</span>
+            <span onclick="checks(this)" class="check">&check;</span>
+        </li>
+        
+    </ol>
+
+    <button class="clearbtn">Clear Items</button>
+
+
+    <button onclick="share()" class="share">Copy To Clipboard</button>
+
+
+    <script>
+        var input = document.querySelector('.input');
+        var addBtn = document.querySelector('.addbtn');
+
+        var itemList = document.querySelector('.itemlist');
+
+
+        function addItemToList(){
+            if(input.value.trim() == ''){
+                //show warning
+                input.value = '';
+                let warning1 = document.querySelector('.w1');
+                warning1.style.display ="block";
+
+                setTimeout(() => {
+                    warning1.style.display ="none";
+                }, 2000);
+            }
+            else{
+                //add to list
+                var item = document.createElement('li');
+                item.setAttribute('class','item');
+
+                item.innerHTML = `<i class="val" style='font-style: normal;'>${input.value}</i><span onclick="cross(this)" class="cross">&Cross;</span>
+            <span onclick="edit(this)" class="edit">&larrhk;</span>
+            <span onclick="checks(this)" class="check">&check;</span>`;
+            
+            itemList.appendChild(item);
+            input.value = '';
+            }
+        }
+
+
+        addBtn.onclick = addItemToList;
+
+        input.addEventListener('keydown',(e)=>{
+            if(e.keyCode === 13){
+                addItemToList();
+            }
+        });
+
+        //clear button function
+        var clearBtn = document.querySelector('.clearbtn');
+        
+        clearBtn.addEventListener('click',()=>{
+            itemList.innerHTML = '';
+            let warning2 = document.querySelector('.w2');
+            warning2.style.display ="block";
+
+            setTimeout(() => {
+                warning2.style.display ="none";
+            }, 2000);
+        });
+
+
+        //check button function
+        function checks(e) {
+            var it = e.parentElement;
+            it.classList.toggle('checked');
+        }
+
+        //cross button function
+        function cross(e) {
+            var it = e.parentElement;
+            it.innerHTML = '';
+        }
+
+        //edit button function
+        function edit(e) {
+            var val = e.parentElement.querySelector('.val');
+            input.value = val.innerHTML;
+            cross(e);
+        }
+
+        //share button function
+        function share() {
+            var items = document.querySelectorAll('.val');
+            var copyList = document.createElement('textarea');
+
+            copyList.value = '';
+            document.body.appendChild(copyList);
+            copyList.setAttribute('class','copylist');
+
+            items.forEach(e => {
+                copyList.value += `${e.innerHTML}, `;
+            });
+
+            copyList.select();
+            // copyList.setSelectionRange(0,99999);
+            document.execCommand('copy');
+
+        }
+    </script>
+</body>
+</html>
