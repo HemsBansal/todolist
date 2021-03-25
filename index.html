@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="warning w1">Empty Input Field</div>
+    <div class="warning w2">All Item Cleared</div>
+    <h1>To Do List</h1>
+   <div class="container">
+    <form action="javascript:void(0)"  id="form">
+        <input type="text" class="input" placeholder="type here...">
+        <button class="addbtn" type="button">Add Items</button>
+    </form>
+   </div>
+
+    <ol class="itemlist">
+
+        <li class="item">
+            <i class="val" style='font-style: normal;'>Grocery Shopping</i>
+            <span onclick="cross(this)" class="cross">&Cross;</span>
+            <span onclick="edit(this)" class="edit">&larrhk;</span>
+            <span onclick="checks(this)" class="check">&check;</span>
+        </li>
+        
+    </ol>
+
+    <button class="clearbtn">Clear Items</button>
+
+
+    <button onclick="share()" class="share">Copy To Clipboard</button>
+
+
+    <script src="script.js">
+        
+    </script>
+</body>
+</html>
